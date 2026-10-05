@@ -1,0 +1,6 @@
+{
+  "name": "Galego Burg e Pizzaria",
+  "description": "Bio site oficial do Galego Burg e Pizzaria. Peça pelo 99Food, siga no Instagram e confira nossa localização em Jaboatão dos Guararapes - PE.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
