@@ -19,7 +19,8 @@ import {
   Heart,
   Navigation,
   Clock,
-  ArrowUp
+  ArrowUp,
+  Star
 } from 'lucide-react';
 
 const LINKS = {
@@ -28,6 +29,7 @@ const LINKS = {
     'https://h5.didiglobal.com/silver-bullet-online/8FTSBVvN4wxCUanV-UY0W?ddlCode=aRwqET&area=BR&lang=pt-BR&appKey=dlp9&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAUw8f5leHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp7OyYWXC5IuSAtQVK8RhJMnjl-lF4mHpeKKVCvOdTs02IuDaUuKdmzEt8JTx_aem_L-5U5-eQWltjlncajgnAkQ&redirectType=0&params=utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaezsmFlwuSLkgLUFSvEYSTJ45fpReJh6XiilQrznU7NNiLg2lLinZsxLfCU8Q_aem_L-5U5-eQWltjlncajgnAkQ',
   instagram: 'https://www.instagram.com/galegoburgoficial__?stkn=d2VvNDQzYXY4NXQx',
   maps: 'https://maps.app.goo.gl/hgo2kjLjBwzNyQu46',
+  googleReview: 'https://search.google.com/local/writereview?placeid=ChIJk09WoJThqgcR9SG25fNBaBg',
 };
 
 export default function App() {
@@ -328,6 +330,42 @@ export default function App() {
               </div>
             </a>
           </motion.div>
+
+          {/* 4. AVALIE NO GOOGLE */}
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: 0.35 }}
+          >
+            <a
+              href={LINKS.googleReview}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={triggerHaptic}
+              className="group block w-full rounded-2xl bg-[#13151c] hover:bg-[#1a1c25] border border-white/10 hover:border-amber-400/40 p-4 transition-all duration-200 shadow-md hover:shadow-lg hover:shadow-amber-500/15 active:scale-[0.98] cursor-pointer"
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-3.5">
+                  <div className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500/20 to-yellow-500/20 group-hover:from-amber-500/30 group-hover:to-yellow-500/30 border border-amber-400/30 flex items-center justify-center shrink-0 group-hover:scale-105 transition-all">
+                    <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+                  </div>
+                  <div className="text-left">
+                    <div className="flex items-center gap-1 text-[11px] font-medium text-amber-400/90">
+                      <span>⭐⭐⭐⭐⭐</span>
+                      <span className="text-zinc-400 text-[10px]">• Deixe sua opinião</span>
+                    </div>
+                    <div className="font-display text-sm sm:text-base font-bold tracking-wide uppercase text-zinc-100 group-hover:text-amber-300 transition-colors">
+                      AVALIE NO GOOGLE
+                    </div>
+                  </div>
+                </div>
+
+                <div className="w-8 h-8 rounded-full bg-white/5 group-hover:bg-white/10 flex items-center justify-center shrink-0 group-hover:translate-x-1 transition-all">
+                  <ExternalLink className="w-4 h-4 text-zinc-400 group-hover:text-white" />
+                </div>
+              </div>
+            </a>
+          </motion.div>
         </div>
 
         {/* SEÇÃO LOCALIZAÇÃO */}
@@ -360,11 +398,24 @@ export default function App() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={triggerHaptic}
-              className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl bg-[#1d2029] hover:bg-[#252935] border border-white/15 hover:border-amber-400/50 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-zinc-100 hover:text-white transition-all duration-200 active:scale-[0.98] shadow-sm cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl bg-[#1d2029] hover:bg-[#252935] border border-white/15 hover:border-amber-400/50 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-zinc-100 hover:text-white transition-all duration-200 active:scale-[0.98] shadow-sm cursor-pointer mb-2.5"
             >
               <MapPin className="w-4 h-4 text-amber-400" />
               <span>VER NO GOOGLE MAPS</span>
               <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
+            </a>
+
+            {/* Avaliação no Google */}
+            <a
+              href={LINKS.googleReview}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={triggerHaptic}
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 hover:border-amber-400/50 text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-300 hover:text-amber-200 transition-all duration-200 active:scale-[0.98] shadow-sm cursor-pointer"
+            >
+              <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+              <span>AVALIE NO GOOGLE</span>
+              <ExternalLink className="w-3.5 h-3.5 text-amber-400/80" />
             </a>
           </div>
         </motion.section>
