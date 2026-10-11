@@ -4,7 +4,6 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
 import {
   MapPin,
   Instagram,
@@ -14,13 +13,11 @@ import {
   Flame,
   QrCode,
   X,
-  Sparkles,
   Heart,
   Navigation,
   Clock,
   ArrowUp,
-  Star,
-  Radio
+  Star
 } from 'lucide-react';
 
 const LINKS = {
@@ -162,10 +159,10 @@ export default function App() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2600);
+      setTimeout(() => setCopied(false), 2400);
     } catch {
       setCopied(true);
-      setTimeout(() => setCopied(false), 2600);
+      setTimeout(() => setCopied(false), 2400);
     }
   };
 
@@ -173,7 +170,7 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  // QR Code URL for sharing current page or 99Food
+  // QR Code URL (only loaded if modal opens)
   const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://galegoburg.com';
   const qrCodeUrl = `https://api.qrserver.com/v1/create-qr-code/?size=280x280&color=ffffff&bgcolor=171923&format=png&data=${encodeURIComponent(
     currentUrl
@@ -181,31 +178,11 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen w-full bg-[#090a0d] text-[#f4f4f6] flex flex-col items-center justify-between overflow-x-hidden selection:bg-amber-500 selection:text-black">
-      {/* Dynamic Ambient Background Illumination with Smooth Motion */}
+      {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        {/* Top Gold-Amber Glow */}
-        <motion.div
-          animate={{
-            scale: [1, 1.08, 1],
-            opacity: [0.22, 0.32, 0.22],
-          }}
-          transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute -top-28 left-1/2 -translate-x-1/2 w-[540px] h-[540px] bg-gradient-to-b from-amber-500/25 via-orange-600/15 to-transparent blur-[125px] rounded-full pointer-events-none"
-        />
-        
-        {/* Side Accents with Pulse */}
-        <motion.div
-          animate={{ opacity: [0.1, 0.18, 0.1] }}
-          transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-          className="absolute top-[40%] -left-32 w-[340px] h-[340px] bg-amber-500/12 blur-[115px] rounded-full pointer-events-none"
-        />
-        <motion.div
-          animate={{ opacity: [0.1, 0.18, 0.1] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="absolute bottom-[10%] -right-28 w-[360px] h-[360px] bg-orange-600/12 blur-[120px] rounded-full pointer-events-none"
-        />
-        
-        {/* Subtle Texture Grid */}
+        <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[540px] h-[540px] bg-gradient-to-b from-amber-500/22 via-orange-600/12 to-transparent blur-[120px] rounded-full animate-pulse-subtle pointer-events-none" />
+        <div className="absolute top-[40%] -left-32 w-[340px] h-[340px] bg-amber-500/10 blur-[110px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-[10%] -right-28 w-[360px] h-[360px] bg-orange-600/10 blur-[115px] rounded-full pointer-events-none" />
         <div
           className="absolute inset-0 opacity-[0.035]"
           style={{
@@ -216,16 +193,13 @@ export default function App() {
       </div>
 
       {/* Top Action Bar (Live Status & Horários no 99Food + Quick actions) */}
-      <header className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 pt-4 pb-2 flex items-start justify-between gap-2.5">
-        {/* Live Status indicator & Quadro de Horários - REORGANIZADO E MELHOR */}
-        <motion.div
-          initial={{ opacity: 0, y: -12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45 }}
+      <header className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 pt-4 pb-2 flex items-start justify-between gap-2.5 animate-fade-in-down">
+        {/* Live Status indicator & Quadro de Horários - REORGANIZADO E OTIMIZADO */}
+        <div
           className={`flex-1 p-3 rounded-2xl backdrop-blur-md text-left transition-all duration-300 border shadow-lg ${
             storeStatus.isOpen
-              ? 'bg-[#0f1713]/95 border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.18)]'
-              : 'bg-[#181114]/95 border-rose-500/35 shadow-[0_0_25px_rgba(244,63,94,0.15)]'
+              ? 'bg-[#0f1713]/95 border-emerald-500/40 shadow-[0_0_25px_rgba(16,185,129,0.16)]'
+              : 'bg-[#181114]/95 border-rose-500/35 shadow-[0_0_25px_rgba(244,63,94,0.14)]'
           }`}
         >
           {/* Header do Quadro: Status & Tag */}
@@ -264,7 +238,7 @@ export default function App() {
             </span>
           </div>
 
-          {/* Lista de Horários Reorganizada com Domingo Incluído */}
+          {/* Lista de Horários com Domingo Incluído */}
           <div className="flex flex-col gap-1.5 text-[10px] sm:text-[11px]">
             {/* Dom e Seg: 17:30 - 22:45 */}
             <div
@@ -357,74 +331,56 @@ export default function App() {
             )}
             <span className="text-zinc-500 font-mono">PE (UTC-3)</span>
           </div>
-        </motion.div>
+        </div>
 
         {/* Action Buttons (QR Code & Share) */}
-        <motion.div
-          initial={{ opacity: 0, x: 12 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.45 }}
-          className="flex flex-col gap-2 shrink-0 self-start"
-        >
+        <div className="flex flex-col gap-2 shrink-0 self-start">
           {/* QR Code trigger */}
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
+          <button
             onClick={() => {
               triggerHaptic();
               setShowQrModal(true);
             }}
-            className="w-9 h-9 rounded-xl bg-[#161820]/95 hover:bg-[#20232d] border border-white/10 hover:border-amber-400/40 flex items-center justify-center text-zinc-300 hover:text-white transition-all shadow-md active:scale-90 cursor-pointer"
+            className="w-9 h-9 rounded-xl bg-[#161820]/95 hover:bg-[#20232d] border border-white/10 hover:border-amber-400/40 flex items-center justify-center text-zinc-300 hover:text-white transition-all shadow-md active:scale-95 cursor-pointer"
             title="Ver QR Code do Bio Site"
             aria-label="Ver QR Code"
           >
             <QrCode className="w-4 h-4 text-amber-400" />
-          </motion.button>
+          </button>
 
           {/* Share button */}
-          <motion.button
-            whileHover={{ scale: 1.08 }}
-            whileTap={{ scale: 0.92 }}
+          <button
             onClick={handleShare}
             className="w-9 h-9 rounded-xl bg-[#161820]/95 hover:bg-[#20232d] border border-white/10 hover:border-amber-400/40 flex items-center justify-center text-zinc-300 hover:text-white transition-all shadow-md active:scale-95 cursor-pointer"
             title="Compartilhar Bio Site"
             aria-label="Compartilhar Bio Site"
           >
             {copied ? (
-              <Check className="w-4 h-4 text-emerald-400" />
+              <Check className="w-3.5 h-3.5 text-emerald-400" />
             ) : (
-              <Share2 className="w-4 h-4 text-amber-400" />
+              <Share2 className="w-3.5 h-3.5 text-amber-400" />
             )}
-          </motion.button>
-        </motion.div>
+          </button>
+        </div>
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 py-2 flex flex-col items-center">
+      <main className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 py-2 flex flex-col items-center animate-fade-in-up">
         {/* TOPO: Logo & Branding */}
-        <motion.div
-          initial={{ opacity: 0, y: -16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: 'easeOut' }}
-          className="flex flex-col items-center text-center w-full"
-        >
+        <div className="flex flex-col items-center text-center w-full">
           {/* Logo Showcase with Amber Aura & Sleek Circular Border */}
           <div className="relative mb-3 flex items-center justify-center">
             {/* Animated Glow Halo */}
-            <motion.div
-              animate={{
-                scale: [1, 1.08, 1],
-                opacity: [0.35, 0.5, 0.35],
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-              className="absolute inset-0 -m-3 bg-gradient-to-tr from-amber-500/40 via-orange-500/30 to-amber-600/35 rounded-full blur-2xl"
-            />
+            <div className="absolute inset-0 -m-3 bg-gradient-to-tr from-amber-500/35 via-orange-500/25 to-amber-600/30 rounded-full blur-2xl animate-pulse-subtle" />
             
             <div className="relative p-1 rounded-full bg-gradient-to-b from-amber-400/50 via-orange-500/30 to-amber-500/20 shadow-2xl backdrop-blur-md">
               <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-[#14161d] border-2 border-amber-400/60 shadow-inner">
                 <img
                   src={LINKS.logo}
                   alt="Galego Burg e Pizzaria"
+                  width="144"
+                  height="144"
+                  fetchPriority="high"
                   className="w-full h-full object-cover rounded-full select-none transition-transform duration-300 hover:scale-105"
                   loading="eager"
                   decoding="async"
@@ -445,35 +401,25 @@ export default function App() {
           </p>
 
           {/* Location Indicator */}
-          <motion.div
-            whileHover={{ scale: 1.03 }}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151720]/80 border border-white/10 text-zinc-300 text-xs font-medium tracking-wide mb-5 shadow-sm backdrop-blur-md"
-          >
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151720]/80 border border-white/10 text-zinc-300 text-xs font-medium tracking-wide mb-5 shadow-sm backdrop-blur-md transition-transform hover:scale-105">
             <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>Jaboatão dos Guararapes - PE</span>
-          </motion.div>
+          </div>
 
           {/* Quality Badges / Highlights */}
           <div className="grid grid-cols-3 gap-2 w-full mb-6">
-            <motion.div
-              whileHover={{ scale: 1.04, y: -2 }}
-              className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-all"
-            >
+            <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
               <span className="text-lg mb-0.5">🍔</span>
               <span className="text-[11px] font-bold text-zinc-200">Burgers</span>
               <span className="text-[9px] text-zinc-500 font-medium">Suculentos</span>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.04, y: -2 }}
-              className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-all"
-            >
+            </div>
+            <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
               <span className="text-lg mb-0.5">🍕</span>
               <span className="text-[11px] font-bold text-zinc-200">Pizzas</span>
               <span className="text-[9px] text-zinc-500 font-medium">No Capricho</span>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.04, y: -2 }}
-              className={`flex flex-col items-center justify-center p-2.5 rounded-xl border backdrop-blur-sm shadow-sm transition-all ${
+            </div>
+            <div
+              className={`flex flex-col items-center justify-center p-2.5 rounded-xl border backdrop-blur-sm shadow-sm transition-transform hover:scale-105 ${
                 storeStatus.isOpen
                   ? 'bg-emerald-500/5 border-emerald-500/25'
                   : 'bg-rose-500/5 border-rose-500/25'
@@ -484,20 +430,14 @@ export default function App() {
                 {storeStatus.isOpen ? 'Aberto' : 'Fechado'}
               </span>
               <span className="text-[9px] text-zinc-500 font-medium">99Food</span>
-            </motion.div>
+            </div>
           </div>
-        </motion.div>
+        </div>
 
         {/* BOTÕES PRINCIPAIS */}
         <div className="w-full flex flex-col gap-3.5 mb-7">
           {/* 1. BOTÃO PRINCIPAL: PEDIR PELO 99FOOD (MAIS DESTACADO) */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.1 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <div className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <a
               href={LINKS.order99Food}
               target="_blank"
@@ -537,7 +477,7 @@ export default function App() {
                     <div className="flex items-center gap-1.5 mb-0.5">
                       {storeStatus.isOpen ? (
                         <span className="text-[10px] font-black uppercase tracking-wider bg-white/25 text-white px-2 py-0.5 rounded-full flex items-center gap-1">
-                          <Flame className="w-3 h-3 fill-amber-300 text-amber-300 animate-bounce" />
+                          <Flame className="w-3 h-3 fill-amber-300 text-amber-300" />
                           Online • Peça Agora
                         </span>
                       ) : (
@@ -563,16 +503,10 @@ export default function App() {
                 </div>
               </div>
             </a>
-          </motion.div>
+          </div>
 
           {/* 2. INSTAGRAM */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.2 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <div className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <a
               href={LINKS.instagram}
               target="_blank"
@@ -600,16 +534,10 @@ export default function App() {
                 </div>
               </div>
             </a>
-          </motion.div>
+          </div>
 
           {/* 3. COMO CHEGAR */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.3 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <div className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <a
               href={LINKS.maps}
               target="_blank"
@@ -637,16 +565,10 @@ export default function App() {
                 </div>
               </div>
             </a>
-          </motion.div>
+          </div>
 
           {/* 4. AVALIE NO GOOGLE */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45, delay: 0.35 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <div className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
             <a
               href={LINKS.googleReview}
               target="_blank"
@@ -675,16 +597,11 @@ export default function App() {
                 </div>
               </div>
             </a>
-          </motion.div>
+          </div>
         </div>
 
         {/* SEÇÃO LOCALIZAÇÃO */}
-        <motion.section
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.4 }}
-          className="w-full rounded-2xl bg-[#111319]/95 border border-white/10 p-5 mb-7 shadow-xl backdrop-blur-md relative overflow-hidden"
-        >
+        <section className="w-full rounded-2xl bg-[#111319]/95 border border-white/10 p-5 mb-7 shadow-xl backdrop-blur-md relative overflow-hidden">
           {/* Top subtle gradient line */}
           <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600" />
 
@@ -703,36 +620,32 @@ export default function App() {
             </p>
 
             {/* Direct action button */}
-            <motion.a
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <a
               href={LINKS.maps}
               target="_blank"
               rel="noopener noreferrer"
               onClick={triggerHaptic}
-              className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl bg-[#1d2029] hover:bg-[#252935] border border-white/15 hover:border-amber-400/50 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-zinc-100 hover:text-white transition-all duration-200 shadow-sm cursor-pointer mb-2.5"
+              className="inline-flex items-center justify-center gap-2 w-full py-3.5 px-4 rounded-xl bg-[#1d2029] hover:bg-[#252935] border border-white/15 hover:border-amber-400/50 text-xs sm:text-sm font-extrabold uppercase tracking-wider text-zinc-100 hover:text-white transition-all duration-200 active:scale-[0.98] shadow-sm cursor-pointer mb-2.5"
             >
               <MapPin className="w-4 h-4 text-amber-400" />
               <span>VER NO GOOGLE MAPS</span>
               <ExternalLink className="w-3.5 h-3.5 text-zinc-400" />
-            </motion.a>
+            </a>
 
             {/* Avaliação no Google */}
-            <motion.a
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <a
               href={LINKS.googleReview}
               target="_blank"
               rel="noopener noreferrer"
               onClick={triggerHaptic}
-              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 hover:border-amber-400/50 text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-300 hover:text-amber-200 transition-all duration-200 shadow-sm cursor-pointer"
+              className="inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 hover:border-amber-400/50 text-xs sm:text-sm font-bold uppercase tracking-wider text-amber-300 hover:text-amber-200 transition-all duration-200 active:scale-[0.98] shadow-sm cursor-pointer"
             >
               <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
               <span>AVALIE NO GOOGLE</span>
               <ExternalLink className="w-3.5 h-3.5 text-amber-400/80" />
-            </motion.a>
+            </a>
           </div>
-        </motion.section>
+        </section>
       </main>
 
       {/* RODAPÉ */}
@@ -754,98 +667,83 @@ export default function App() {
         </p>
 
         {/* Instagram Icon / Link */}
-        <motion.a
-          whileHover={{ scale: 1.15, rotate: 6 }}
-          whileTap={{ scale: 0.9 }}
+        <a
           href={LINKS.instagram}
           target="_blank"
           rel="noopener noreferrer"
           onClick={triggerHaptic}
-          className="w-10 h-10 rounded-full bg-[#151720] hover:bg-[#1e212b] border border-white/10 hover:border-pink-500/40 flex items-center justify-center text-zinc-300 hover:text-pink-400 transition-all duration-200 mb-5 shadow-sm cursor-pointer"
+          className="w-10 h-10 rounded-full bg-[#151720] hover:bg-[#1e212b] border border-white/10 hover:border-pink-500/40 flex items-center justify-center text-zinc-300 hover:text-pink-400 transition-all duration-200 mb-5 shadow-sm hover:scale-110 active:scale-95 cursor-pointer"
           aria-label="Abrir Instagram oficial"
         >
           <Instagram className="w-5 h-5" />
-        </motion.a>
+        </a>
 
         {/* Back to top button */}
-        <motion.button
-          whileHover={{ scale: 1.05, y: -2 }}
-          whileTap={{ scale: 0.95 }}
+        <button
           onClick={scrollToTop}
           className="flex items-center gap-1 text-[11px] text-zinc-400 hover:text-amber-400 font-medium mb-4 transition-colors cursor-pointer"
         >
           <ArrowUp className="w-3 h-3" />
           <span>Voltar ao topo</span>
-        </motion.button>
+        </button>
 
         <div className="text-[11px] text-zinc-500 font-normal">
           © 2026 Galego Burg e Pizzaria
         </div>
       </footer>
 
-      {/* QR Code Modal */}
-      <AnimatePresence>
-        {showQrModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.92 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.92 }}
-              className="relative w-full max-w-xs rounded-2xl bg-[#14161f] border border-white/15 p-6 flex flex-col items-center text-center shadow-2xl"
+      {/* QR Code Modal (Lazy rendered) */}
+      {showQrModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in-up">
+          <div className="relative w-full max-w-xs rounded-2xl bg-[#14161f] border border-white/15 p-6 flex flex-col items-center text-center shadow-2xl">
+            <button
+              onClick={() => setShowQrModal(false)}
+              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Fechar"
             >
-              <button
-                onClick={() => setShowQrModal(false)}
-                className="absolute top-4 right-4 w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 flex items-center justify-center text-zinc-400 hover:text-white transition-colors cursor-pointer"
-                aria-label="Fechar"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <X className="w-4 h-4" />
+            </button>
 
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
-                <QrCode className="w-6 h-6 text-amber-400" />
-              </div>
+            <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3">
+              <QrCode className="w-6 h-6 text-amber-400" />
+            </div>
 
-              <h3 className="font-display text-base font-bold text-white uppercase mb-1">
-                Escanear Bio Site
-              </h3>
-              <p className="text-xs text-zinc-400 mb-4">
-                Aponte a câmera do seu celular para abrir o link na bio.
-              </p>
+            <h3 className="font-display text-base font-bold text-white uppercase mb-1">
+              Escanear Bio Site
+            </h3>
+            <p className="text-xs text-zinc-400 mb-4">
+              Aponte a câmera do seu celular para abrir o link na bio.
+            </p>
 
-              <div className="p-3 bg-[#1a1d28] rounded-xl border border-white/10 mb-4 shadow-inner">
-                <img
-                  src={qrCodeUrl}
-                  alt="QR Code Galego Burg e Pizzaria"
-                  className="w-48 h-48 rounded-lg select-none"
-                  loading="lazy"
-                />
-              </div>
+            <div className="p-3 bg-[#1a1d28] rounded-xl border border-white/10 mb-4 shadow-inner">
+              <img
+                src={qrCodeUrl}
+                alt="QR Code Galego Burg e Pizzaria"
+                width="192"
+                height="192"
+                className="w-48 h-48 rounded-lg select-none"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
 
-              <button
-                onClick={handleShare}
-                className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-extrabold text-xs uppercase tracking-wider transition-colors active:scale-95 cursor-pointer"
-              >
-                {copied ? 'Link Copiado!' : 'Copiar Link da Página'}
-              </button>
-            </motion.div>
+            <button
+              onClick={handleShare}
+              className="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-black font-extrabold text-xs uppercase tracking-wider transition-colors active:scale-95 cursor-pointer"
+            >
+              {copied ? 'Link Copiado!' : 'Copiar Link da Página'}
+            </button>
           </div>
-        )}
-      </AnimatePresence>
+        </div>
+      )}
 
       {/* Floating Copy Feedback Toast */}
-      <AnimatePresence>
-        {copied && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-6 z-50 px-4 py-2.5 rounded-full bg-zinc-900 border border-emerald-500/50 text-white text-xs font-semibold shadow-2xl flex items-center gap-2 backdrop-blur-md"
-          >
-            <Check className="w-4 h-4 text-emerald-400" />
-            <span>Link copiado com sucesso!</span>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {copied && (
+        <div className="fixed bottom-6 z-50 px-4 py-2.5 rounded-full bg-zinc-900 border border-emerald-500/50 text-white text-xs font-semibold shadow-2xl flex items-center gap-2 backdrop-blur-md animate-fade-in-up">
+          <Check className="w-4 h-4 text-emerald-400" />
+          <span>Link copiado com sucesso!</span>
+        </div>
+      )}
     </div>
   );
 }
