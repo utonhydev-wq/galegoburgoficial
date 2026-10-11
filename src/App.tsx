@@ -21,7 +21,8 @@ import {
 } from 'lucide-react';
 
 const LINKS = {
-  logo: 'https://i.postimg.cc/g2DZWcJR/527476370-18324407854230826-6751280860243887092-n.jpg',
+  logo: '/logo.jpg',
+  fallbackLogo: 'https://i.postimg.cc/g2DZWcJR/527476370-18324407854230826-6751280860243887092-n.jpg',
   order99Food:
     'https://h5.didiglobal.com/silver-bullet-online/8FTSBVvN4wxCUanV-UY0W?ddlCode=aRwqET&area=BR&lang=pt-BR&appKey=dlp9&utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAUw8f5leHRuA2FlbQIxMQBwZG9mAnNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp7OyYWXC5IuSAtQVK8RhJMnjl-lF4mHpeKKVCvOdTs02IuDaUuKdmzEt8JTx_aem_L-5U5-eQWltjlncajgnAkQ&redirectType=0&params=utm_source%3Dig%26utm_medium%3Dsocial%26utm_content%3Dlink_in_bio%26fbclid%3DPAZXh0bgNhZW0CMTEAcGRvZgJzcnRjBmFwcF9pZA81NjcwNjczNDMzNTI0MjcAAaezsmFlwuSLkgLUFSvEYSTJ45fpReJh6XiilQrznU7NNiLg2lLinZsxLfCU8Q_aem_L-5U5-eQWltjlncajgnAkQ',
   instagram: 'https://www.instagram.com/galegoburgoficial__?stkn=d2VvNDQzYXY4NXQx',
@@ -377,6 +378,12 @@ export default function App() {
               <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-[#14161d] border-2 border-amber-400/60 shadow-inner">
                 <img
                   src={LINKS.logo}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    if (target.src !== LINKS.fallbackLogo) {
+                      target.src = LINKS.fallbackLogo;
+                    }
+                  }}
                   alt="Galego Burg e Pizzaria"
                   width="128"
                   height="128"
