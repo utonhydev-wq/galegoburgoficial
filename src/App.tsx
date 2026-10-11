@@ -177,12 +177,12 @@ export default function App() {
   )}`;
 
   return (
-    <div className="relative min-h-screen w-full bg-[#090a0d] text-[#f4f4f6] flex flex-col items-center justify-between overflow-x-hidden selection:bg-amber-500 selection:text-black">
+    <div className="relative min-h-[100dvh] w-full bg-[#090a0d] text-[#f4f4f6] flex flex-col items-center justify-between overflow-x-hidden selection:bg-amber-500 selection:text-black pt-[max(env(safe-area-inset-top),0.5rem)] pb-[max(env(safe-area-inset-bottom),1rem)]">
       {/* Background Ambient Glows */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -top-28 left-1/2 -translate-x-1/2 w-[540px] h-[540px] bg-gradient-to-b from-amber-500/22 via-orange-600/12 to-transparent blur-[120px] rounded-full animate-pulse-subtle pointer-events-none" />
-        <div className="absolute top-[40%] -left-32 w-[340px] h-[340px] bg-amber-500/10 blur-[110px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[10%] -right-28 w-[360px] h-[360px] bg-orange-600/10 blur-[115px] rounded-full pointer-events-none" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[460px] h-[460px] bg-gradient-to-b from-amber-500/20 via-orange-600/10 to-transparent blur-[110px] rounded-full animate-pulse-subtle pointer-events-none" />
+        <div className="absolute top-[40%] -left-32 w-[300px] h-[300px] bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-[10%] -right-28 w-[320px] h-[320px] bg-orange-600/10 blur-[105px] rounded-full pointer-events-none" />
         <div
           className="absolute inset-0 opacity-[0.035]"
           style={{
@@ -193,7 +193,7 @@ export default function App() {
       </div>
 
       {/* Top Action Bar (Live Status & Horários no 99Food + Quick actions) */}
-      <header className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 pt-4 pb-2 flex items-start justify-between gap-2.5 animate-fade-in-down">
+      <header className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 pt-2 sm:pt-3 pb-2 flex items-start justify-between gap-2 sm:gap-2.5 animate-fade-in-down">
         {/* Live Status indicator & Quadro de Horários - REORGANIZADO E OTIMIZADO */}
         <div
           className={`flex-1 p-3 rounded-2xl backdrop-blur-md text-left transition-all duration-300 border shadow-lg ${
@@ -365,21 +365,21 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10 w-full max-w-[480px] px-4 sm:px-5 py-2 flex flex-col items-center animate-fade-in-up">
+      <main className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 py-1.5 flex flex-col items-center animate-fade-in-up">
         {/* TOPO: Logo & Branding */}
         <div className="flex flex-col items-center text-center w-full">
           {/* Logo Showcase with Amber Aura & Sleek Circular Border */}
-          <div className="relative mb-3 flex items-center justify-center">
+          <div className="relative mb-2.5 flex items-center justify-center">
             {/* Animated Glow Halo */}
-            <div className="absolute inset-0 -m-3 bg-gradient-to-tr from-amber-500/35 via-orange-500/25 to-amber-600/30 rounded-full blur-2xl animate-pulse-subtle" />
+            <div className="absolute inset-0 -m-2.5 bg-gradient-to-tr from-amber-500/35 via-orange-500/25 to-amber-600/30 rounded-full blur-xl animate-pulse-subtle" />
             
             <div className="relative p-1 rounded-full bg-gradient-to-b from-amber-400/50 via-orange-500/30 to-amber-500/20 shadow-2xl backdrop-blur-md">
-              <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden bg-[#14161d] border-2 border-amber-400/60 shadow-inner">
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-[#14161d] border-2 border-amber-400/60 shadow-inner">
                 <img
                   src={LINKS.logo}
                   alt="Galego Burg e Pizzaria"
-                  width="144"
-                  height="144"
+                  width="128"
+                  height="128"
                   fetchPriority="high"
                   className="w-full h-full object-cover rounded-full select-none transition-transform duration-300 hover:scale-105"
                   loading="eager"
@@ -390,42 +390,42 @@ export default function App() {
           </div>
 
           {/* Restaurant Official Name */}
-          <h1 className="font-display text-2xl sm:text-[27px] font-black tracking-tight text-white uppercase drop-shadow-md mb-2">
+          <h1 className="font-display text-xl sm:text-2xl font-black tracking-tight text-white uppercase drop-shadow-md mb-1.5">
             GALEGO BURG E PIZZARIA
           </h1>
 
           {/* Short Phrase */}
-          <p className="text-zinc-200 text-sm sm:text-[15px] font-medium leading-relaxed max-w-[340px] mb-2.5">
+          <p className="text-zinc-200 text-xs sm:text-sm font-medium leading-relaxed max-w-[320px] mb-2">
             Seu lanche favorito está aqui! 🍔🍕<br />
             <span className="text-amber-400 font-bold">Peça agora e aproveite!</span>
           </p>
 
           {/* Location Indicator */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151720]/80 border border-white/10 text-zinc-300 text-xs font-medium tracking-wide mb-5 shadow-sm backdrop-blur-md transition-transform hover:scale-105">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#151720]/80 border border-white/10 text-zinc-300 text-[11px] sm:text-xs font-medium tracking-wide mb-3.5 shadow-sm backdrop-blur-md transition-transform hover:scale-105">
             <MapPin className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <span>Jaboatão dos Guararapes - PE</span>
           </div>
 
           {/* Quality Badges / Highlights */}
-          <div className="grid grid-cols-3 gap-2 w-full mb-6">
-            <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
-              <span className="text-lg mb-0.5">🍔</span>
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2 w-full mb-4">
+            <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
+              <span className="text-base sm:text-lg mb-0.5">🍔</span>
               <span className="text-[11px] font-bold text-zinc-200">Burgers</span>
               <span className="text-[9px] text-zinc-500 font-medium">Suculentos</span>
             </div>
-            <div className="flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
-              <span className="text-lg mb-0.5">🍕</span>
+            <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-[#12141a]/80 border border-white/5 backdrop-blur-sm shadow-sm transition-transform hover:scale-105">
+              <span className="text-base sm:text-lg mb-0.5">🍕</span>
               <span className="text-[11px] font-bold text-zinc-200">Pizzas</span>
               <span className="text-[9px] text-zinc-500 font-medium">No Capricho</span>
             </div>
             <div
-              className={`flex flex-col items-center justify-center p-2.5 rounded-xl border backdrop-blur-sm shadow-sm transition-transform hover:scale-105 ${
+              className={`flex flex-col items-center justify-center p-2 rounded-xl border backdrop-blur-sm shadow-sm transition-transform hover:scale-105 ${
                 storeStatus.isOpen
                   ? 'bg-emerald-500/5 border-emerald-500/25'
                   : 'bg-rose-500/5 border-rose-500/25'
               }`}
             >
-              <span className="text-lg mb-0.5">⚡</span>
+              <span className="text-base sm:text-lg mb-0.5">⚡</span>
               <span className={`text-[11px] font-bold ${storeStatus.isOpen ? 'text-emerald-400' : 'text-rose-400'}`}>
                 {storeStatus.isOpen ? 'Aberto' : 'Fechado'}
               </span>
