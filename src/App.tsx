@@ -125,12 +125,12 @@ export default function App() {
   const [showQrModal, setShowQrModal] = useState(false);
   const [storeStatus, setStoreStatus] = useState<StoreStatus>(computeStoreStatus);
 
-  // Auto-refresh schedule status every 15 seconds to reflect exact opening/closing minutes
+  // Auto-refresh schedule status every minute
   useEffect(() => {
     setStoreStatus(computeStoreStatus());
     const interval = setInterval(() => {
       setStoreStatus(computeStoreStatus());
-    }, 15000);
+    }, 60000);
     return () => clearInterval(interval);
   }, []);
 
@@ -179,11 +179,11 @@ export default function App() {
 
   return (
     <div className="relative min-h-[100dvh] w-full bg-[#090a0d] text-[#f4f4f6] flex flex-col items-center justify-between overflow-x-hidden selection:bg-amber-500 selection:text-black pt-[max(env(safe-area-inset-top),0.5rem)] pb-[max(env(safe-area-inset-bottom),1rem)]">
-      {/* Background Ambient Glows */}
+      {/* Background Ambient Glows - Static and GPU optimized */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
-        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[460px] h-[460px] bg-gradient-to-b from-amber-500/20 via-orange-600/10 to-transparent blur-[110px] rounded-full animate-pulse-subtle pointer-events-none" />
-        <div className="absolute top-[40%] -left-32 w-[300px] h-[300px] bg-amber-500/10 blur-[100px] rounded-full pointer-events-none" />
-        <div className="absolute bottom-[10%] -right-28 w-[320px] h-[320px] bg-orange-600/10 blur-[105px] rounded-full pointer-events-none" />
+        <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-[460px] h-[460px] bg-gradient-to-b from-amber-500/20 via-orange-600/10 to-transparent blur-[100px] rounded-full pointer-events-none" />
+        <div className="absolute top-[40%] -left-32 w-[300px] h-[300px] bg-amber-500/10 blur-[90px] rounded-full pointer-events-none" />
+        <div className="absolute bottom-[10%] -right-28 w-[320px] h-[320px] bg-orange-600/10 blur-[95px] rounded-full pointer-events-none" />
         <div
           className="absolute inset-0 opacity-[0.035]"
           style={{
@@ -194,7 +194,7 @@ export default function App() {
       </div>
 
       {/* Top Action Bar (Live Status & Horários no 99Food + Quick actions) */}
-      <header className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 pt-2 sm:pt-3 pb-2 flex items-start justify-between gap-2 sm:gap-2.5 animate-fade-in-down">
+      <header className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 pt-2 sm:pt-3 pb-2 flex items-start justify-between gap-2 sm:gap-2.5 animate-fade-in">
         {/* Live Status indicator & Quadro de Horários - REORGANIZADO E OTIMIZADO */}
         <div
           className={`flex-1 p-3 rounded-2xl backdrop-blur-md text-left transition-all duration-300 border shadow-lg ${
@@ -366,13 +366,13 @@ export default function App() {
       </header>
 
       {/* Main Content Area */}
-      <main className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 py-1.5 flex flex-col items-center animate-fade-in-up">
+      <main className="relative z-10 w-full max-w-[480px] px-3.5 sm:px-5 py-1.5 flex flex-col items-center animate-fade-in">
         {/* TOPO: Logo & Branding */}
         <div className="flex flex-col items-center text-center w-full">
           {/* Logo Showcase with Amber Aura & Sleek Circular Border */}
           <div className="relative mb-2.5 flex items-center justify-center">
-            {/* Animated Glow Halo */}
-            <div className="absolute inset-0 -m-2.5 bg-gradient-to-tr from-amber-500/35 via-orange-500/25 to-amber-600/30 rounded-full blur-xl animate-pulse-subtle" />
+            {/* Ambient Glow Halo - Static & GPU optimized */}
+            <div className="absolute inset-0 -m-2.5 bg-gradient-to-tr from-amber-500/35 via-orange-500/25 to-amber-600/30 rounded-full blur-xl pointer-events-none" />
             
             <div className="relative p-1 rounded-full bg-gradient-to-b from-amber-400/50 via-orange-500/30 to-amber-500/20 shadow-2xl backdrop-blur-md">
               <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden bg-[#14161d] border-2 border-amber-400/60 shadow-inner">
@@ -388,7 +388,7 @@ export default function App() {
                   width="128"
                   height="128"
                   fetchPriority="high"
-                  className="w-full h-full object-cover rounded-full select-none transition-transform duration-300 hover:scale-105"
+                  className="w-full h-full object-cover rounded-full select-none transition-transform duration-200 hover:scale-105"
                   loading="eager"
                   decoding="async"
                 />
@@ -444,33 +444,33 @@ export default function App() {
         {/* BOTÕES PRINCIPAIS */}
         <div className="w-full flex flex-col gap-3.5 mb-7">
           {/* 1. BOTÃO PRINCIPAL: PEDIR PELO 99FOOD (MAIS DESTACADO) */}
-          <div className="transition-transform duration-200 hover:scale-[1.02] active:scale-[0.98]">
+          <div className="transition-transform duration-150 hover:scale-[1.01] active:scale-[0.98]">
             <a
               href={LINKS.order99Food}
               target="_blank"
               rel="noopener noreferrer"
               onClick={triggerHaptic}
-              className={`relative group overflow-hidden block w-full rounded-2xl p-[2px] transition-all duration-300 cursor-pointer ${
+              className={`relative group overflow-hidden block w-full rounded-2xl p-[2px] transition-all duration-200 cursor-pointer ${
                 storeStatus.isOpen
-                  ? 'shadow-[0_0_35px_rgba(245,158,11,0.28)] hover:shadow-[0_0_45px_rgba(245,158,11,0.5)]'
-                  : 'shadow-[0_0_30px_rgba(244,63,94,0.22)] hover:shadow-[0_0_40px_rgba(244,63,94,0.38)]'
+                  ? 'shadow-[0_0_30px_rgba(245,158,11,0.24)] hover:shadow-[0_0_40px_rgba(245,158,11,0.4)]'
+                  : 'shadow-[0_0_25px_rgba(244,63,94,0.18)] hover:shadow-[0_0_35px_rgba(244,63,94,0.3)]'
               }`}
             >
               {/* Outer Vibrant Border Gradient */}
               <div
-                className={`absolute inset-0 rounded-2xl transition-all duration-300 ${
+                className={`absolute inset-0 rounded-2xl transition-all duration-200 ${
                   storeStatus.isOpen
                     ? 'bg-gradient-to-r from-amber-400 via-orange-500 to-amber-300'
                     : 'bg-gradient-to-r from-rose-500 via-red-600 to-rose-400'
                 }`}
               />
 
-              {/* Shimmer Light Reflection Sweep */}
-              <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/25 to-transparent skew-x-[-20deg] animate-shimmer pointer-events-none" />
+              {/* Shimmer Light Reflection Sweep - Calm and fluid */}
+              <div className="absolute inset-0 w-1/2 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[-20deg] animate-shimmer-calm pointer-events-none" />
 
               {/* Button Core Surface */}
               <div
-                className={`relative px-4 sm:px-5 py-4 rounded-[14px] flex items-center justify-between text-white transition-all duration-300 ${
+                className={`relative px-4 sm:px-5 py-4 rounded-[14px] flex items-center justify-between text-white transition-all duration-200 ${
                   storeStatus.isOpen
                     ? 'bg-gradient-to-r from-[#d97706] via-[#ea580c] to-[#c2410c]'
                     : 'bg-gradient-to-r from-[#881337] via-[#9f1239] to-[#881337]'
